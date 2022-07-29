@@ -1,38 +1,126 @@
-.App {
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+.main-content {
+  font-family: var(--font-family);
+  width: 600px;
+  margin: auto;
+  max-width: 95%;
+}
+
+.main-content h1 {
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  color: #fff;
   text-align: center;
+  margin-top: 30px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.validate-btn {
+  padding: 0.5rem 1rem;
+  color: #fff;
+  background: #ff4820;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.validate-btn:hover {
+  transform: scale(1.1) translateY(-2px);
+}
+.validate-btn:disabled {
+  cursor: not-allowed;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.results {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 1000px;
+  max-width: 95%;
   color: white;
+  margin: auto;
+  font-family: var(--font-family);
+  border-radius: 8px;
+  border: 1px solid #fff;
+  margin-top: 40px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.valid,
+.invalid {
+  width: 50%;
+  border-left: 1px solid #fff;
 }
 
-.App-link {
-  color: #61dafb;
+.valid h3 {
+  background-color: green;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.invalid h3 {
+  background-color: red;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px;
+}
+
+ul {
+  list-style-position: inside;
+}
+
+.item {
+  padding: 10px;
+  line-break: anywhere;
+}
+
+.progress {
+  width: 1000px;
+  max-width: 95%;
+  color: white;
+  margin: 40px auto;
+  font-family: var(--font-family);
+}
+
+.progress-info {
+  width: 1000px;
+  max-width: 95%;
+  color: white;
+  font-family: var(--font-family);
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 750px) {
+  .results {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+  .invalid,
+  .valid {
+    min-height: 100px;
+    width: 100%;
+  }
+  .invalid {
+    margin-top: 30px;
   }
 }
