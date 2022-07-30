@@ -12,3 +12,11 @@
   --color-text: #81afdd;
   --color-subtext: #ff8a71;
 }
+
+#root {
+  background: radial-gradient(ellipse at top left, var(--color-bg), #7a7fba);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  overflow-y: auto;
+}

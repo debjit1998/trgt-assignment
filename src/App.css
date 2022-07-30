@@ -5,10 +5,6 @@
   scroll-behavior: smooth;
 }
 
-body {
-  background: var(--color-bg);
-}
-
 a {
   color: unset;
   text-decoration: none;
@@ -28,7 +24,7 @@ a {
   letter-spacing: -0.04em;
   color: #fff;
   text-align: center;
-  margin-top: 30px;
+  padding-top: 30px;
 }
 
 .validate-btn {
@@ -64,7 +60,7 @@ a {
   border: 1px solid #fff;
   margin-top: 40px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .valid,
 .invalid {
@@ -77,6 +73,7 @@ a {
   font-weight: bold;
   text-align: center;
   padding: 5px;
+  font-family: var(--font-family);
 }
 
 .invalid h3 {
@@ -84,6 +81,7 @@ a {
   font-weight: bold;
   text-align: center;
   padding: 5px;
+  font-family: var(--font-family);
 }
 
 ul {
