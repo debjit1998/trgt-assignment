@@ -71,7 +71,10 @@ function App() {
             style={{ marginTop: "1rem" }}
             sx={{
               "& .MuiLinearProgress-bar": {
-                transition: "none",
+                transitionDuration: "100ms",
+              },
+              "& .MuiLinearProgress-barColorPrimary": {
+                backgroundColor: "#ff4820",
               },
             }}
             variant="determinate"
