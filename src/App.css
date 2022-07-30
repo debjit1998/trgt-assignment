@@ -93,6 +93,7 @@ ul {
 .item {
   padding: 10px;
   line-break: anywhere;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .progress {
@@ -122,5 +123,14 @@ ul {
   }
   .invalid {
     margin-top: 30px;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
