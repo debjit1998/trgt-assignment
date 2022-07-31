@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { TextField, LinearProgress } from "@mui/material";
+import { TextField, LinearProgress, Snackbar, Alert } from "@mui/material";
 import "./App.css";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
+  const [error, setError] = useState("");
 
   const handleValidate = async () => {
     if (value.trim().length === 0) return;
@@ -23,15 +24,23 @@ function App() {
     setInvalid([]);
     setCount(0);
     setTotal(urls.length);
+    setError("");
 
     for (let url of urls) {
       try {
-        const response = await axios.get(url);
-        if (String(response.status).startsWith("2"))
-          setValid((prev) => [...prev, url]);
-        else throw new Error();
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/validate`,
+          {
+            url,
+          }
+        );
+        if (response.data?.valid) setValid((prev) => [...prev, url]);
+        else setInvalid((prev) => [...prev, url]);
       } catch (error) {
-        setInvalid((prev) => [...prev, url]);
+        setError(
+          "Something went wrong. Please check your network or try again"
+        );
+        break;
       }
 
       setCount((prev) => prev + 1);
@@ -41,6 +50,14 @@ function App() {
 
   return (
     <>
+      <Snackbar
+        open={!!error}
+        onClose={() => setError("")}
+        key={"URL Error"}
+        autoHideDuration={6000}
+      >
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
       <div className="main-content">
         <h1>URL Validator</h1>
         <TextField
