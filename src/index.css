@@ -6,10 +6,9 @@
   --gradient-text: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
   --gradient-bar: linear-gradient(103.22deg, #ae67fa -13.86%, #f49867 99.55%);
 
-  --color-bg: #040c18;
-  --color-footer: #031b34;
-  --color-blog: #042c54;
-  --color-text: #81afdd;
+  --color-bg: #181004;
+  --color-thumb: #d68812;
+  --color-track: #81afdd;
   --color-subtext: #ff8a71;
 }
 
@@ -19,4 +18,41 @@
   background-size: cover;
   height: 100vh;
   overflow-y: auto;
+}
+
+/* width */
+#root::-webkit-scrollbar {
+  width: 10px;
+}
+
+.MuiInputBase-input::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+#root::-webkit-scrollbar-track,
+.MuiInputBase-input::-webkit-scrollbar-track {
+  background: var(--color-track);
+  border-radius: 10px;
+}
+
+/* Handle */
+#root::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--color-thumb);
+}
+
+.MuiInputBase-input::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: var(--color-thumb);
+}
+
+@media screen and (max-width: 400px) {
+  #root::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .MuiInputBase-input::-webkit-scrollbar {
+    width: 0;
+  }
 }
