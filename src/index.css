@@ -6,22 +6,35 @@
   --gradient-text: linear-gradient(89.97deg, #ae67fa 1.84%, #f49867 102.67%);
   --gradient-bar: linear-gradient(103.22deg, #ae67fa -13.86%, #f49867 99.55%);
 
+  --color-white: #fff;
   --color-bg: #181004;
   --color-thumb: #d68812;
   --color-track: #81afdd;
   --color-subtext: #ff8a71;
+  --color-highlight: #ff4820;
+  --color-valid: green;
+  --color-invalid: red;
+
+  --progress-bar-duration: 100ms;
 }
 
-#root {
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+body {
   background: radial-gradient(ellipse at top left, var(--color-bg), #7a7fba);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   overflow-y: auto;
 }
 
 /* width */
-#root::-webkit-scrollbar {
+body::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -30,14 +43,14 @@
 }
 
 /* Track */
-#root::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
 .MuiInputBase-input::-webkit-scrollbar-track {
   background: var(--color-track);
   border-radius: 10px;
 }
 
 /* Handle */
-#root::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: var(--color-thumb);
 }
@@ -48,7 +61,7 @@
 }
 
 @media screen and (max-width: 400px) {
-  #root::-webkit-scrollbar {
+  body::-webkit-scrollbar {
     width: 0;
   }
 

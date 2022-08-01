@@ -1,134 +1,108 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import axios from "axios";
-import { TextField, LinearProgress, Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+import Header from "./components/header";
+import UrlForm from "./components/url-form";
+import Footer from "./components/footer";
+import Progress from "./components/progress";
+import Results from "./components/results";
 import "./App.css";
 
-function App() {
+const App = () => {
   const [value, setValue] = useState("");
-  const [valid, setValid] = useState([]);
-  const [invalid, setInvalid] = useState([]);
+  const [validResults, setValidResults] = useState([]);
+  const [invalidResults, setInvalidResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [error, setError] = useState("");
+  const [checkedUrls, setCheckedUrls] = useState(0);
+  const [totalUrls, setTotalUrls] = useState(0);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleValidate = async () => {
     if (value.trim().length === 0) return;
 
     const urls = value.split("\n").filter((url) => url.trim() !== "");
 
+    //return early if there are no valid urls
     if (urls.length === 0) return;
 
+    // reset the states before calling api
     setLoading(true);
-    setValid([]);
-    setInvalid([]);
-    setCount(0);
-    setTotal(urls.length);
-    setError("");
+    setValidResults([]);
+    setInvalidResults([]);
+    setCheckedUrls(0);
+    setTotalUrls(urls.length);
+    setErrorMsg("");
 
-    for (let url of urls) {
+    for (const url of urls) {
       try {
+        // call the validate api
         const response = await axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/validate`,
           {
             url,
           }
         );
-        if (response.data?.valid) setValid((prev) => [...prev, url]);
-        else setInvalid((prev) => [...prev, url]);
+
+        if (response.data?.valid) {
+          //append valid url to the valid results list
+          setValidResults((prevUrls) => [
+            ...prevUrls,
+            { name: url, id: uuidv4() },
+          ]);
+        } else {
+          //append invalid url to the inavlid results list
+          setInvalidResults((prevUrls) => [
+            ...prevUrls,
+            { name: url, id: uuidv4() },
+          ]);
+        }
       } catch (error) {
-        setError(
+        // set error message to show in snackbar
+        setErrorMsg(
           "Something went wrong. Please check your network or try again"
         );
         break;
       }
 
-      setCount((prev) => prev + 1);
+      setCheckedUrls((prevCount) => prevCount + 1); //increment the count of checked urls
     }
     setLoading(false);
   };
 
   return (
-    <>
-      <Snackbar
-        open={!!error}
-        onClose={() => setError("")}
-        key={"URL Error"}
-        autoHideDuration={6000}
-      >
-        <Alert severity="error">{error}</Alert>
-      </Snackbar>
-      <div className="main-content">
-        <h1>URL Validator</h1>
-        <TextField
-          style={{
-            width: "100%",
-            background: "white",
-            marginTop: "2rem",
-          }}
-          multiline
-          rows={10}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <div style={{ marginTop: "15px" }}>
-          <button
-            className="validate-btn"
-            disabled={value.trim().length === 0 || loading}
-            onClick={handleValidate}
-          >
-            VALIDATE
-          </button>
-        </div>
-      </div>
+    <Fragment>
+      {/* HEADER */}
+      <Header />
 
-      {!!total && (
-        <div className="progress">
-          <LinearProgress
-            style={{ marginTop: "1rem" }}
-            sx={{
-              "& .MuiLinearProgress-bar": {
-                transitionDuration: "100ms",
-              },
-              "& .MuiLinearProgress-barColorPrimary": {
-                backgroundColor: "#ff4820",
-              },
-            }}
-            variant="determinate"
-            value={Math.round((count * 100) / total)}
-          />
-          <h4 className="progress-info">
-            ({count}/{total}) URLs checked
-          </h4>
-        </div>
-      )}
+      {/* URL FORM */}
+      <UrlForm
+        value={value}
+        setValue={setValue}
+        handleValidate={handleValidate}
+        loading={loading}
+      />
 
-      {(!!valid.length || !!invalid.length) && (
-        <div className="results">
-          <div className="valid">
-            <h3>Valid URLs</h3>
-            <ul>
-              {valid.map((url, index) => (
-                <li className="item" key={index}>
-                  {url}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="invalid">
-            <h3>Invalid URLs</h3>
-            <ul>
-              {invalid.map((url, index) => (
-                <li className="item" key={index}>
-                  {url}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-    </>
+      {/* URL CHECK PROGRESS */}
+      <Progress totalUrls={totalUrls} checkedUrls={checkedUrls} />
+
+      {/* RESULTS SECTION */}
+      <Results validResults={validResults} invalidResults={invalidResults} />
+
+      {/* FOOTER */}
+      <Footer>
+        {/* SNACKBAR */}
+        <Snackbar
+          open={!!errorMsg}
+          onClose={() => setErrorMsg("")}
+          key={"URL Error"}
+          autoHideDuration={6000}
+        >
+          <Alert severity="error">{errorMsg}</Alert>
+        </Snackbar>
+      </Footer>
+    </Fragment>
   );
-}
+};
 
 export default App;

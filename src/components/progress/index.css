@@ -1,0 +1,14 @@
+.progress {
+  width: 1000px;
+  max-width: 95%;
+  margin: 40px auto;
+  font-family: var(--font-family);
+}
+
+.progress .progress__info {
+  width: 1000px;
+  max-width: 95%;
+  color: var(--color-white);
+  font-family: var(--font-family);
+  margin-top: 20px;
+}
