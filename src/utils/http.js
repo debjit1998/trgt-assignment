@@ -23,4 +23,9 @@ export const callApi = (url, callback) =>
     .then((response) => {
       if (typeof callback === "function") callback(response.data, url);
       return response.data;
+    })
+    .catch((err) => {
+      if (err.message !== "Network Error" && typeof callback === "function")
+        callback({ valid: false }, url);
+      else throw err;
     });

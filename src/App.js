@@ -84,7 +84,6 @@ const App = () => {
         setSnackbarErrorMsg(
           "Something went wrong. Please check your network or try again"
         );
-        break;
       }
     }
 
