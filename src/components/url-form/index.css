@@ -5,8 +5,32 @@
   max-width: 95%;
 }
 
+.url-form__invalid {
+  margin-top: 10px;
+  color: var(--color-highlight);
+  font-weight: bold;
+}
+
+.url-form__invalid ul {
+  list-style-position: inside;
+}
+
+.url-form ul .url-form__listitem {
+  padding: 5px;
+  line-break: anywhere;
+}
+
 .validate {
   margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.validate .validate__slider {
+  width: 100%;
+  color: var(--color-white);
 }
 
 .validate .validate__btn {
