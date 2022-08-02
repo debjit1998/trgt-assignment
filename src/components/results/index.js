@@ -15,13 +15,19 @@ const Results = ({ validResults, invalidResults }) => {
     <div className="results">
       {/* VALID URLS */}
       <div className="results__valid">
-        <h3>Valid URLs</h3>
+        <h3>
+          Valid URLs{" "}
+          {!!validResults.length && <span>({validResults.length})</span>}
+        </h3>
         <ul>{validResults.map(renderList)}</ul>
       </div>
 
       {/* INVALID URLS */}
       <div className="results__invalid">
-        <h3>Invalid URLs</h3>
+        <h3>
+          Invalid URLs{" "}
+          {!!invalidResults.length && <span>({invalidResults.length})</span>}
+        </h3>
         <ul>{invalidResults.map(renderList)}</ul>
       </div>
     </div>
