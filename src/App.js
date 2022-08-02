@@ -11,7 +11,7 @@ import "./App.css";
 
 const separators = /[\s,\n\t;]+/;
 
-const defaultRequests = 5;
+const defaultRequests = 25;
 
 const App = () => {
   const [value, setValue] = useState("");
@@ -48,12 +48,21 @@ const App = () => {
     const urls = [],
       invalidArr = [];
 
+    const invalidUrlMap = new Map();
+
     urlParts.forEach((url) => {
       if (isValidUrl(url)) {
         urls.push(url);
       } else if (url.trim().length !== 0) {
-        invalidArr.push({ name: url, id: uuidv4() });
+        if (!invalidUrlMap.has(url)) {
+          invalidUrlMap.set(url, 1);
+        } else {
+          invalidUrlMap.set(url, invalidUrlMap.get(url) + 1);
+        }
       }
+    });
+    invalidUrlMap.forEach((value, key) => {
+      invalidArr.push({ name: key, count: value, id: uuidv4() });
     });
 
     setInvalidUrls(invalidArr);
@@ -69,15 +78,14 @@ const App = () => {
     setTotalUrls(urls.length);
     setSnackbarErrorMsg("");
 
-    // windowing is added to limit the number of requests sent to the backend
-    // large number of concurrent requests may crash the server
+    // windowing is added to limit the number of requests
+    // sent to the server at a time
     for (let index = 0; index < urls.length; index += maxRequests) {
       try {
         const promiseArr = urls
           .slice(index, index + maxRequests)
           .map((url) => callApi(url, updateListData));
 
-        // call the validate api concurrently for a window
         await Promise.all(promiseArr);
       } catch (error) {
         // set error message to show in snackbar

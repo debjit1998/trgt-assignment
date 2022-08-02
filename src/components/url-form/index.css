@@ -13,6 +13,8 @@
 
 .url-form__invalid ul {
   list-style-position: inside;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .url-form ul .url-form__listitem {

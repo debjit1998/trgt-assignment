@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { TextField, Slider } from "@mui/material";
 import "./index.css";
 
-const renderList = ({ name, id }) => (
+const renderList = ({ name, id, count }) => (
   <li className="url-form__listitem" key={id}>
-    {name}
+    {name} - ({count})
   </li>
 );
 
@@ -68,11 +68,13 @@ const UrlForm = ({
 
         {/* CONCURRENT REQUESTS SLIDER */}
         <div className="validate__slider">
-          <div>No of simultaneous checks:</div>
+          <div>
+            Max no. of simultaneous checks: <b>{maxRequests}</b>
+          </div>
           <Slider
             value={maxRequests}
             min={1}
-            max={15}
+            max={50}
             step={1}
             valueLabelDisplay="auto"
             onChange={(_, newValue) => setMaxRequests(newValue)}
