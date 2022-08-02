@@ -101,7 +101,7 @@ const App = () => {
   return (
     <Fragment>
       {/* HEADER */}
-      <Header />
+      <Header loading={loading} />
 
       {/* URL FORM */}
       <UrlForm
